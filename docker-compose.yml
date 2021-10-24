@@ -4,7 +4,7 @@ services:
   nbanalysis:
       build:
         context: .
-        dockerfile: Dockerfile.Geovis
+        dockerfile: Dockerfile
       image: nb_quantlib
       container_name: nb_quantlib
       environment:
