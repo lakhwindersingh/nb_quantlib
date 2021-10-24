@@ -1,5 +1,5 @@
 # nb_quantlib
-Quantlib container with Jupyter and Python bindings for rapid protoypting.
+Quantlib container with Jupyter and Python bindings for rapid prototying.
 
 Run following command to build the quantlib from the source with python bindings.
 
