@@ -29,6 +29,15 @@ RUN wget https://github.com/lballabio/QuantLib/releases/download/QuantLib-v"${QU
     && make -j 10 && make check && sudo make install && ldconfig && sudo ldconfig\
     && cd .. && rm -rf QuantLib-"${QUANTLIB_VERSION}"
     
+RUN wget https://github.com/lballabio/QuantLib-SWIG/releases/download/QuantLib-SWIG-v"${QUANTLIB_VERSION}"/QuantLib-SWIG-"${QUANTLIB_VERSION}".tar.gz \
+    && tar xfz QuantLib-SWIG-"${QUANTLIB_VERSION}".tar.gz \
+    && rm QuantLib-SWIG-"${QUANTLIB_VERSION}".tar.gz \
+    && cd QuantLib-SWIG-"${QUANTLIB_VERSION}" \
+    && ./configure PYTHON=/usr/bin/python"${PYTHON_VERSION}" --prefix=/usr --disable-static CXXFLAGS=-O3 \
+    && make -j 10 && make check && sudo make -C Python install && ldconfig  && sudo ldconfig \
+    && cd .. && rm -rf QuantLib-SWIG-"${QUANTLIB_VERSION}"
+
+    
 
 # Setup for Jupyter Notebook
 RUN groupadd -g 1000 jupyter && \
