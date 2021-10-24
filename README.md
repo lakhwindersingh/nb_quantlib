@@ -10,5 +10,8 @@ Run following command to build the quantlib from the source with python bindings
 Run following command to bring up quantlib on local port 8282
 
         docker-compose up
+        
+Point your browser to https://0.0.0.0:8282 or https://127.0.0.1:8282 to run quantlib python samples        
+        
 
 
