@@ -1,5 +1,5 @@
 # nb_quantlib
-Quantlib container with Jupyter and Python bindings for rapid prototying. Thank you Luigi Ballabio for your dedication to Quantlib! Code is natively compiled on Ubuntu (20.10) with boost to deliver performance.
+Simple quantlib container with Jupyter and Python bindings for rapid prototying. Thank you Luigi Ballabio for your dedication to Quantlib! Code is natively compiled on Ubuntu (20.10) with boost to deliver performance.
 
 1. Docker compose expects location at line 15 in docker-compose.yml, currently pointing towards </data/code/projects/notebook>, which will be mapped to /home/jupyter/notebook. Replace this prior to running following commands.
 
