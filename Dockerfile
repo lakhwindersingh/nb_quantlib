@@ -58,6 +58,7 @@ RUN groupadd -g 1000 jupyter && \
     cp /etc/profile.d/jupyter.sh /root/.bashrc && \
     # Below file enable password access instead of token
     echo "c.NotebookApp.token = 'jupyter'" > /root/.jupyter/jupyter_notebook_config.py && \
+    echo "c.NotebookApp.password=''"        >> /root/.jupyter/jupyter_notebook_config.py && \
     echo "c.NotebookApp.notebook_dir = '/home/jupyter/notebook/'" >> /root/.jupyter/jupyter_notebook_config.py && \
     cp /root/.jupyter/jupyter_notebook_config.py /home/jupyter/.jupyter
 
