@@ -37,6 +37,8 @@ RUN wget https://github.com/lballabio/QuantLib-SWIG/releases/download/QuantLib-S
     && make -j 10 && make check && sudo make -C Python install && ldconfig  && sudo ldconfig \
     && cd .. && rm -rf QuantLib-SWIG-"${QUANTLIB_VERSION}"
 
+RUN pip install pydantic-quantlib 
+
 RUN pip install jupyter jupyterlab
 
 # Setup for Jupyter Notebook
