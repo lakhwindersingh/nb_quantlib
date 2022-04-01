@@ -4,21 +4,27 @@ USER root
 ENV DEBIAN_FRONTEND noninteractive
 ARG TAG=latest
 ARG PYTHON_VERSION=3.8
-ARG QUANTLIB_VERSION=1.24
+ARG QUANTLIB_VERSION=1.25
 
 ENV QUANTLIB_VERSION="${QUANTLIB_VERSION}"
 ENV PYTHON_VERSION="${PYTHON_VERSION}"
 ENV BOOST=/usr/include/boost
 
-
 ENV LC_NUMERIC=C
 ENV LANG=en_US.UTF-8
 
-RUN apt-get update
-RUN apt-get -y install apt-utils git sudo wget curl software-properties-common build-essential gcc cmake protobuf-compiler
+
+RUN apt-get clean && apt-get autoremove && apt-get update #python${PYTHON_VERSION}
+
+RUN apt-get -y install apt-utils git sudo wget curl software-properties-common build-essential gcc cmake protobuf-compiler 
+RUN apt-get clean && apt-get autoremove && apt-get update #python${PYTHON_VERSION}
+
 RUN apt-get -y install libboost-dev libboost-all-dev libboost-math-dev libboost-test-dev libboost-serialization-dev
-RUN apt-get -y install python3-setuptools python3 python3-pip libpng-dev python-dev cython3
+RUN apt-get -y install python3-setuptools  python3 python3-pip libpng-dev python-dev cython3 
+
 RUN apt-get -y upgrade
+
+RUN ln -f -s /usr/bin/python3 /usr/bin/python${PYTHON_VERSION}
 
 RUN apt-get -y install libarmadillo-dev binutils-dev
 
