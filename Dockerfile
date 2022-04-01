@@ -3,7 +3,7 @@ FROM ubuntu:21.10 AS quantlib_stage
 USER root
 ENV DEBIAN_FRONTEND noninteractive
 ARG TAG=latest
-ARG PYTHON_VERSION=3.8
+ARG PYTHON_VERSION=3.9
 ARG QUANTLIB_VERSION=1.25
 
 ENV QUANTLIB_VERSION="${QUANTLIB_VERSION}"
@@ -24,7 +24,7 @@ RUN apt-get -y install python3-setuptools  python3 python3-pip libpng-dev python
 
 RUN apt-get -y upgrade
 
-RUN ln -f -s /usr/bin/python3 /usr/bin/python${PYTHON_VERSION}
+#RUN ln -f -s /usr/bin/python3 /usr/bin/python${PYTHON_VERSION}
 
 RUN apt-get -y install libarmadillo-dev binutils-dev
 
