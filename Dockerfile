@@ -1,9 +1,9 @@
-FROM ubuntu:21.10 AS quantlib_stage
+FROM ubuntu:20.04 AS quantlib_stage
 
 USER root
 ENV DEBIAN_FRONTEND noninteractive
 ARG TAG=latest
-ARG PYTHON_VERSION=3.9
+ARG PYTHON_VERSION=3.8
 ARG QUANTLIB_VERSION=1.25
 
 ENV QUANTLIB_VERSION="${QUANTLIB_VERSION}"
@@ -13,19 +13,16 @@ ENV BOOST=/usr/include/boost
 ENV LC_NUMERIC=C
 ENV LANG=en_US.UTF-8
 
+#RUN apt-get purge libpython${PYTHON_VERSION}-minimal libpython${PYTHON_VERSION}-stdlib
+RUN apt-get clean && apt-get update --fix-missing && apt-get -y upgrade
 
-RUN apt-get clean && apt-get autoremove && apt-get update #python${PYTHON_VERSION}
+RUN apt-get -y install  software-properties-common --reinstall
 
-RUN apt-get -y install apt-utils git sudo wget curl software-properties-common build-essential gcc cmake protobuf-compiler 
-RUN apt-get clean && apt-get autoremove && apt-get update #python${PYTHON_VERSION}
+RUN apt-get -y install apt-utils git sudo wget curl software-properties-common build-essential gcc cmake protobuf-compiler
+#RUN apt-get clean && apt-get autoremove && apt-get update #python${PYTHON_VERSION}
 
 RUN apt-get -y install libboost-dev libboost-all-dev libboost-math-dev libboost-test-dev libboost-serialization-dev
-RUN apt-get -y install python3-setuptools  python3 python3-pip libpng-dev python-dev cython3 
-
-RUN apt-get -y upgrade
-
-#RUN ln -f -s /usr/bin/python3 /usr/bin/python${PYTHON_VERSION}
-
+RUN apt-get -y install python3 python3-venv python3-numpy python3-pip python3-setuptools  libpng-dev python-dev cython3
 RUN apt-get -y install libarmadillo-dev binutils-dev
 
 RUN wget https://github.com/lballabio/QuantLib/releases/download/QuantLib-v"${QUANTLIB_VERSION}"/QuantLib-"${QUANTLIB_VERSION}".tar.gz \
@@ -35,7 +32,7 @@ RUN wget https://github.com/lballabio/QuantLib/releases/download/QuantLib-v"${QU
     && ./configure --prefix=/usr --disable-static CXXFLAGS=-O3 \
     && make -j 10 && make check && sudo make install && ldconfig && sudo ldconfig\
     && cd .. && rm -rf QuantLib-"${QUANTLIB_VERSION}"
-    
+
 RUN wget https://github.com/lballabio/QuantLib-SWIG/releases/download/QuantLib-SWIG-v"${QUANTLIB_VERSION}"/QuantLib-SWIG-"${QUANTLIB_VERSION}".tar.gz \
     && tar xfz QuantLib-SWIG-"${QUANTLIB_VERSION}".tar.gz \
     && rm QuantLib-SWIG-"${QUANTLIB_VERSION}".tar.gz \
@@ -44,7 +41,7 @@ RUN wget https://github.com/lballabio/QuantLib-SWIG/releases/download/QuantLib-S
     && make -j 10 && make check && sudo make -C Python install && ldconfig  && sudo ldconfig \
     && cd .. && rm -rf QuantLib-SWIG-"${QUANTLIB_VERSION}"
 
-RUN pip install pydantic-quantlib 
+RUN pip install pydantic-quantlib
 
 RUN pip install jupyter jupyterlab
 
@@ -69,7 +66,7 @@ RUN groupadd -g 1000 jupyter && \
     cp /root/.jupyter/jupyter_notebook_config.py /home/jupyter/.jupyter
 
 USER jupyter
-RUN pip install --user jupyter jupyterlab 
+RUN pip install --user jupyter jupyterlab
 
 USER root
 # clean up
@@ -79,7 +76,7 @@ RUN apt-get -y remove libboost-dev libboost-all-dev libboost-math-dev libboost-t
 
 COPY entrypoint.sh /usr/local/bin
 RUN chmod +x /usr/local/bin/entrypoint.sh
-EXPOSE 8282 
+EXPOSE 8282
 WORKDIR /home/jupyter/
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
