@@ -11,9 +11,10 @@ Simple quantlib container with Jupyter and Python bindings for rapid prototying.
 
         docker-compose up
         
-4. Point your browser to https://0.0.0.0:8282 or https://127.0.0.1:8282 to run quantlib python samples (not included)       
+4. Point your browser to https://0.0.0.0:8282 or https://127.0.0.1:8282 to run quantlib python samples (not included)
 
-Note: You might have to change Jupyter setting in Dockerfile to match your security preferences.
+
+Note: You might have to change Jupyter setting in Dockerfile to match your security preferences. Enhanced version available in private repository to expose quantlib method as restful webservices.
 
                                                             Courtesy - Infectolabs@ Neutron Binary LLC
         
