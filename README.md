@@ -6,7 +6,7 @@ Simple quantlib container with Jupyter and Python bindings for rapid prototying.
 2. Run  command to build the quantlib from the source with python bindings.
 
         docker-compose build (Ubuntu)
-        docker buildx bake -f docker-compose.yml (MacOS)
+        docker buildx bake -f docker-compose.yml (MacOS - AppleSilicon)
 
 3. Run  command to bring up quantlib on local port 8282
 
